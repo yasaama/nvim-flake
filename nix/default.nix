@@ -379,7 +379,7 @@ let
           colorizer = true;
           conform = true;
           comment = true;
-          copilot = false;
+          copilot = true;
           dadbod = true;
           dap = true;
           dashboard = true;
@@ -396,7 +396,7 @@ let
           lualine = true;
           markdown = true;
           mdx = true;
-          minuet = true;
+          minuet = false;
           move = true;
           multicursor = false;
           noice = true;
