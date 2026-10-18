@@ -197,6 +197,18 @@ return {
 			}
 
 			return {
+				cmd = function(dispatchers, config)
+					-- Prefer the project-local Effect tsgo binary (from @effect/tsgo),
+					-- fall back to the nix-installed tsgo.
+					local root = vim.fs.root(
+						vim.api.nvim_get_current_buf(),
+						{ "bun.lock", "bun.lockb", "package-lock.json", "pnpm-lock.yaml" }
+					)
+					local tsc = root and root .. "/node_modules/.bin/tsc"
+					local cmd = (tsc and vim.uv.fs_stat(tsc)) and { tsc, "--lsp", "--stdio" }
+						or { "tsgo", "--lsp", "--stdio" }
+					return vim.lsp.rpc.start(cmd, dispatchers)
+				end,
 				settings = {
 					typescript = { inlayHints = inlay_hints, format = format_settings },
 					javascript = { inlayHints = inlay_hints, format = format_settings },
